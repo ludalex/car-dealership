@@ -2,7 +2,9 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Adverts resource
+# Car Adverts resource
 GET     /adverts             controllers.CarAdvertController.index
 POST    /adverts             controllers.CarAdvertController.create
-GET     /adverts/:id         controllers.CarAdvertController.get(id: Int)
+GET     /adverts/:id         controllers.CarAdvertController.read(id: Int)
+PUT     /adverts/:id         controllers.CarAdvertController.update(id: Int)
+DELETE  /adverts/:id         controllers.CarAdvertController.delete(id: Int)

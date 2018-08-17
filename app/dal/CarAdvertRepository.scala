@@ -47,11 +47,24 @@ class CarAdvertRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(i
 
   def insert(carAdvert: CarAdvert): Future[Unit] = db.run(carAdverts += carAdvert).map(_ => "Success")
 
-  def list(): Future[Seq[CarAdvert]] = db.run {
+  def findAll(): Future[Seq[CarAdvert]] = db.run {
     carAdverts.result
   }
 
-  def find(id: Int): Future[Option[CarAdvert]] = {
+  def findById(id: Int): Future[Option[CarAdvert]] = {
     db.run(carAdverts.filter(_.id === id).result.headOption)
+  }
+
+  def update(id: Int, carAdvert: CarAdvert): Future[Boolean] = {
+    val newCarAdvert: CarAdvert = carAdvert.copy(id)
+    db.run(carAdverts.filter(_.id === id).update(newCarAdvert)).map { affectedRows =>
+      affectedRows > 0
+    }
+  }
+
+  def delete(id: Int): Future[Boolean] = {
+    db.run(carAdverts.filter(_.id === id).delete).map { affectedRows =>
+      affectedRows > 0
+    }
   }
 }

@@ -13,13 +13,13 @@ import scala.concurrent.Future
 class CarAdvertController @Inject() (carAdverts: CarAdvertRepository) extends Controller {
 
   def index = Action.async { request =>
-    carAdverts.list().map { data =>
+    carAdverts.findAll().map { data =>
       Ok(Json.toJson(data)).as(JSON)
     }
   }
 
-  def get(id: Int) = Action.async { request =>
-    carAdverts.find(id).map { data =>
+  def read(id: Int) = Action.async { request =>
+    carAdverts.findById(id).map { data =>
       data match {
         case Some(carAdvert) => Ok(Json.toJson(carAdvert)).as(JSON)
         case None => UnprocessableEntity
@@ -36,6 +36,32 @@ class CarAdvertController @Inject() (carAdverts: CarAdvertRepository) extends Co
       }
     }.recoverTotal {
       e => Future { BadRequest( Json.obj("status" -> "fail", "data" -> JsError.toFlatJson(e)) ) }
+    }
+  }
+
+  def update(id: Int) = Action.async(parse.json) { request =>
+    request.body.validate[CarAdvert].map { carAdvert =>
+      carAdverts.update(id, carAdvert).map { result =>
+        result match {
+          case true => Ok(Json.obj("status" -> "success")).as(JSON)
+          case false => UnprocessableEntity
+        }
+      }.recoverWith {
+        case e => Future { InternalServerError("ERROR: " + e ) }
+      }
+    }.recoverTotal {
+      e => Future { BadRequest( Json.obj("status" -> "fail", "data" -> JsError.toFlatJson(e)) ) }
+    }
+  }
+
+  def delete(id: Int) = Action.async { request =>
+    carAdverts.delete(id).map { result =>
+      result match {
+        case true => Ok(Json.obj("status" -> "success")).as(JSON)
+        case false => UnprocessableEntity
+      }
+    }.recoverWith {
+      case e => Future { InternalServerError("ERROR: " + e ) }
     }
   }
 }
