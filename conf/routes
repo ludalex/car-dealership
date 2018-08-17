@@ -5,3 +5,4 @@
 # Adverts resource
 GET     /adverts             controllers.CarAdvertController.index
 POST    /adverts             controllers.CarAdvertController.create
+GET     /adverts/:id         controllers.CarAdvertController.get(id: Int)

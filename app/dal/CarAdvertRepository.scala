@@ -50,4 +50,8 @@ class CarAdvertRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(i
   def list(): Future[Seq[CarAdvert]] = db.run {
     carAdverts.result
   }
+
+  def find(id: Int): Future[Option[CarAdvert]] = {
+    db.run(carAdverts.filter(_.id === id).result.headOption)
+  }
 }
