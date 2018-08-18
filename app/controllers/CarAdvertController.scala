@@ -35,7 +35,7 @@ class CarAdvertController @Inject() (carAdverts: CarAdvertRepository) extends Co
         case e => Future { InternalServerError("ERROR: " + e )}
       }
     }.recoverTotal {
-      e => Future { BadRequest( Json.obj("status" -> "fail", "data" -> JsError.toFlatJson(e)) ) }
+      e => Future { BadRequest( Json.obj("status" -> "error", "data" -> JsError.toFlatJson(e)) ) }
     }
   }
 
@@ -50,7 +50,7 @@ class CarAdvertController @Inject() (carAdverts: CarAdvertRepository) extends Co
         case e => Future { InternalServerError("ERROR: " + e ) }
       }
     }.recoverTotal {
-      e => Future { BadRequest( Json.obj("status" -> "fail", "data" -> JsError.toFlatJson(e)) ) }
+      e => Future { BadRequest( Json.obj("status" -> "error", "data" -> JsError.toFlatJson(e)) ) }
     }
   }
 
