@@ -2,6 +2,7 @@ package models
 
 import java.sql.Date
 
+import io.swagger.annotations.ApiModel
 import models.FuelType.FuelType
 import play.api.data.validation.ValidationError
 import play.api.libs.json._
@@ -9,8 +10,9 @@ import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
 import utils.EnumerationHelpers
 
-
+@ApiModel("CarAdvert")
 case class CarAdvert(id: Option[Int], title: String, fuel: FuelType, price: Int, isNew: Boolean, mileage: Option[Int], firstRegistration: Option[Date])
+
 
 object FuelType extends Enumeration {
 
