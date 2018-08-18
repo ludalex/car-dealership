@@ -7,7 +7,7 @@ CREATE TABLE car_adverts (
   price INT(11) NOT NULL,
   is_new TINYINT(1) NOT NULL,
   mileage INT(11),
-  first_registration VARCHAR(255)
+  first_registration DATE
 );
 
 # --- !Downs

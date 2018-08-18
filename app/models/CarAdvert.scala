@@ -1,13 +1,16 @@
 package models
 
+import java.sql.Date
+
 import models.FuelType.FuelType
 import play.api.data.validation.ValidationError
 import play.api.libs.json._
 import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
+import utils.EnumerationHelpers
 
 
-case class CarAdvert(id: Option[Int], title: String, fuel: FuelType, price: Int, isNew: Boolean, mileage: Option[Int], firstRegistration: Option[String])
+case class CarAdvert(id: Option[Int], title: String, fuel: FuelType, price: Int, isNew: Boolean, mileage: Option[Int], firstRegistration: Option[Date])
 
 object FuelType extends Enumeration {
 
@@ -36,10 +39,10 @@ object CarAdvert {
       } and
       (__ \ "isNew").read[Boolean].flatMap {
         case false => {
-          (__ \ "firstRegistration").readNullable[String].filter(ValidationError(s"'firstRegistration' property is required when 'isNew' is set to false."))(_.isDefined)
+          (__ \ "firstRegistration").readNullable[Date].filter(ValidationError(s"'firstRegistration' property is required when 'isNew' is set to false."))(_.isDefined)
         }
         case _ => {
-          (__ \ "firstRegistration").readNullable[String]
+          (__ \ "firstRegistration").readNullable[Date]
 
         }
       }

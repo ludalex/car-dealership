@@ -1,6 +1,7 @@
-package models
+package utils
 
 import play.api.libs.json._
+
 import scala.language.implicitConversions
 
 

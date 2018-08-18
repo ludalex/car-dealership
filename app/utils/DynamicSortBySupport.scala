@@ -1,13 +1,10 @@
-package models
+package utils
 
 object DynamicSortBySupport {
 
-  import slick.ast.Ordering.Direction
   import slick.ast.Ordering
-  import slick.lifted.Rep
-  import slick.lifted.Query
-  import slick.lifted.ColumnOrdered
-  import slick.lifted.Ordered
+  import slick.ast.Ordering.Direction
+  import slick.lifted.{ColumnOrdered, Ordered, Query, Rep}
 
   type ColumnOrdering = (String, Direction) // Just a type alias
   trait ColumnSelector {

@@ -1,12 +1,15 @@
 package dal
 
+import java.sql.Date
+
 import javax.inject.{Inject, Singleton}
 import models.FuelType.FuelType
 import play.api.db.slick.DatabaseConfigProvider
 import slick.driver.JdbcProfile
-import models.{CarAdvert, DynamicSortBySupport, FuelType}
+import models.{CarAdvert, FuelType}
 import slick.ast.{BaseTypedType, Ordering}
 import slick.ast.Ordering.Direction
+import utils.DynamicSortBySupport
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -37,13 +40,17 @@ class CarAdvertRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(i
 
     def mileage = column[Option[Int]]("mileage")
 
-    def firstRegistration = column[Option[String]]("first_registration")
+    def firstRegistration = column[Option[Date]]("first_registration")
 
     def * = (id, title, fuel, price, isNew, mileage, firstRegistration) <> ((CarAdvert.apply _).tupled, CarAdvert.unapply)
 
     val select = Map(
       "id" -> (this.id),
-      "title" -> (this.title)
+      "title" -> (this.title),
+      "fuel" -> (this.fuel),
+      "price" -> (this.price),
+      "mileage" -> (this.mileage),
+      "firstRegistration" -> (this.firstRegistration)
     )
   }
 
