@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "6e2f2c5e-79e9-4322-9fd8-2f930dffe75c",
+		"name": "Car Adverts API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Retrieve all adverts",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Access-Control-Request-Method",
+						"value": "GET"
+					},
+					{
+						"key": "Access-Control-Request-Headers",
+						"value": "X-Requested-With"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:9000/adverts?sortBy=title:desc",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"adverts"
+					],
+					"query": [
+						{
+							"key": "sortBy",
+							"value": "title:desc"
+						}
+					]
+				},
+				"description": "Retrieve all placed Car Adverts"
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve single advert",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:9000/adverts/1",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"adverts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new advert",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Access-Control-Request-Method",
+						"value": "POST"
+					},
+					{
+						"key": "Access-Control-Request-Headers",
+						"value": "Content-Type"
+					},
+					{
+						"key": "Access-Control-Allow-Origin",
+						"value": "*"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"BMW M4\",\n\t\"fuel\": \"Gasoline\",\n\t\"price\": 60000000,\n\t\"isNew\": false,\n\t\"mileage\": 1337,\n\t\"firstRegistration\": \"2017-09-15\"\n}"
+				},
+				"url": {
+					"raw": "localhost:9000/adverts",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"adverts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update existing advert",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"BMW M4\",\n\t\"fuel\": \"Diesel\",\n\t\"price\": 60000000,\n\t\"isNew\": false,\n\t\"mileage\": 1337,\n\t\"firstRegistration\": \"2017-09-15\"\n}"
+				},
+				"url": {
+					"raw": "localhost:9000/adverts/1",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"adverts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete advert",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:9000/adverts/1",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"adverts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "92e39074-3623-49e3-8f64-d97a4677db7b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d0f825d2-5a0c-412c-9749-4f3d926ca4ca",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
