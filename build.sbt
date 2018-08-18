@@ -9,6 +9,7 @@ resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 scalaVersion := "2.11.11"
 
 libraryDependencies ++= Seq(
+  filters,
   cache,
   ws,
   specs2 % Test,
