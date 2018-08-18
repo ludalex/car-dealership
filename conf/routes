@@ -3,7 +3,7 @@
 # ~~~~
 
 # Car Adverts resource
-GET     /adverts             controllers.CarAdvertController.index
+GET     /adverts             controllers.CarAdvertController.index(sortBy: Option[String])
 POST    /adverts             controllers.CarAdvertController.create
 GET     /adverts/:id         controllers.CarAdvertController.read(id: Int)
 PUT     /adverts/:id         controllers.CarAdvertController.update(id: Int)

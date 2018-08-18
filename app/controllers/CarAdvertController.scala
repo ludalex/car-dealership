@@ -12,8 +12,8 @@ import scala.concurrent.Future
 
 class CarAdvertController @Inject() (carAdverts: CarAdvertRepository) extends Controller {
 
-  def index = Action.async { request =>
-    carAdverts.findAll().map { data =>
+  def index(sortBy: Option[String]) = Action.async { request =>
+    carAdverts.findAll(sortBy).map { data =>
       Ok(Json.toJson(data)).as(JSON)
     }
   }
