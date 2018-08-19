@@ -16,7 +16,7 @@ import scala.concurrent.ExecutionContext.{global => globalExecutionContext}
 
 
 @RunWith(classOf[JUnitRunner])
-class CarAdvertsSpec extends Specification {
+class CarAdvertSpec extends Specification {
 
   val application = new GuiceApplicationBuilder().build()
   implicit val ec = globalExecutionContext
