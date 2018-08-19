@@ -53,9 +53,37 @@ curl -X POST \
 }'
 ```
 
-Likewise, you can also send a **GET** to retrieve all saved Car Adverts:
+Likewise, you can also send a **GET** to retrieve all saved Car Adverts with optional descending/ascending sorting by any field (by default it will sort by ID):
 
 ```bash
 curl -X GET \
   'http://localhost:9000/adverts?sortBy=title:desc' 
+```
+
+You can also retrieve a single Car Advert by ID (**GET/:id**):
+
+```bash
+curl -X GET \
+  http://localhost:9000/adverts/1
+```
+
+Or modify an existing one (**PUT/:id**):
+
+```bash
+curl -X PUT \
+  http://localhost:9000/adverts/1 \
+  -d '{
+	"title": "BMW 118d",
+	"fuel": "Diesel",
+	"price": 20000000,
+	"isNew": false,
+	"mileage": 42,
+	"firstRegistration": "2017-09-15"
+}'
+```
+
+And of course delete a Car Advert (**DELETE/:id**)
+```bash
+curl -X DELETE \
+  http://localhost:9000/adverts/1
 ```
