@@ -1,8 +1,8 @@
-name := "scout24-task"
+name := "car-dealership"
  
 version := "1.0" 
       
-lazy val `scout24-task` = (project in file(".")).enablePlugins(PlayScala)
+lazy val `car-dealership` = (project in file(".")).enablePlugins(PlayScala)
 
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
       

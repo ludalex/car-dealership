@@ -1,6 +1,6 @@
-AutoScout24 Scala Test Task
+Car Dealership
 ================================================
-A simple REST API for the `adverts` resource backed by a Scala CRUD application made with:
+An example of a REST API for the `adverts` resource backed by a Scala CRUD backend made with:
  - [Play 2.4](https://www.playframework.com/) 
  - [Slick](http://slick.lightbend.com/doc/3.1.1/) 
  - [Play-Slick](https://www.playframework.com/documentation/latest/PlaySlick) 
@@ -59,7 +59,3 @@ Likewise, you can also send a **GET** to retrieve all saved Car Adverts:
 curl -X GET \
   'http://localhost:9000/adverts?sortBy=title:desc' 
 ```
-
-Notes
-================
-To the developer(s) evaluating this project: even though I have a Java background, please let me remind you that this was the very first chance for me to Play around (pardon the pun) with the world of Scala and Play! Please forgive any obvious mistakes :) 
