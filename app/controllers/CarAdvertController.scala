@@ -14,7 +14,8 @@ import scala.concurrent.Future
 class CarAdvertController @Inject() (carAdverts: CarAdvertRepository) extends Controller {
 
   @ApiOperation(value = "Retrieve all Car Adverts", response = classOf[models.CarAdvert], responseContainer = "List")
-  def index(sortBy: Option[String]) = Action.async {
+  def index(@ApiParam(value = "String used for sorting (fieldName:direction)", required = true,
+    defaultValue = "id:asc") sortBy: Option[String]) = Action.async {
     carAdverts.findAll(sortBy).map { data =>
       Ok(Json.toJson(data)).as(JSON)
     }
@@ -30,15 +31,15 @@ class CarAdvertController @Inject() (carAdverts: CarAdvertRepository) extends Co
     }
   }
 
-  @ApiOperation(value = "Create new Car Advert", response = classOf[Void], responseReference = "void")
+  @ApiOperation(value = "Create new Car Advert", response = classOf[models.CarAdvert], responseReference = "void")
   @ApiImplicitParams(Array(
     new ApiImplicitParam(value = "CarAdvert object that needs to be added to the store", required = true, dataType = "models.CarAdvert", paramType = "body")))
   def create = Action.async(parse.json) { request =>
     request.body.validate[CarAdvert].map { carAdvert =>
       carAdverts.insert(carAdvert).map {
-        result => Created(Json.obj("status" -> "success"))
+        result => Created(Json.toJson(result))
       }.recoverWith {
-        case e => Future { InternalServerError("ERROR: " + e )}
+        case e => Future { InternalServerError("Error: " + e )}
       }
     }.recoverTotal {
       e => Future { BadRequest( Json.obj("status" -> "error", "data" -> JsError.toJson(e)) ) }
@@ -49,10 +50,9 @@ class CarAdvertController @Inject() (carAdverts: CarAdvertRepository) extends Co
   def update(@ApiParam(value = "ID of the Car Advert to update") id: Int) = Action.async(parse.json) { request =>
     request.body.validate[CarAdvert].map { carAdvert =>
       carAdverts.update(id, carAdvert).map {
-        case true => Ok(Json.obj("status" -> "success")).as(JSON)
-        case false => UnprocessableEntity
+        result => Ok(Json.toJson(result))
       }.recoverWith {
-        case e => Future { InternalServerError("ERROR: " + e ) }
+        case e => Future { InternalServerError("Error: " + e ) }
       }
     }.recoverTotal {
       e => Future { BadRequest( Json.obj("status" -> "error", "data" -> JsError.toJson(e)) ) }
@@ -65,7 +65,7 @@ class CarAdvertController @Inject() (carAdverts: CarAdvertRepository) extends Co
       case true => Ok(Json.obj("status" -> "success")).as(JSON)
       case false => UnprocessableEntity
     }.recoverWith {
-      case e => Future { InternalServerError("ERROR: " + e ) }
+      case e => Future { InternalServerError("Error: " + e ) }
     }
   }
 }

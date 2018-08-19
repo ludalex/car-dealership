@@ -47,7 +47,7 @@ class CarAdvertRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(i
 
     def * = (id, title, fuel, price, isNew, mileage, firstRegistration) <> ((CarAdvert.apply _).tupled, CarAdvert.unapply)
 
-    // Mapping used by the "sort by" logic
+    // Mapping used by the dynamic "sort by field" logic
     val select = Map(
       "id" -> (this.id),
       "title" -> (this.title),
@@ -64,20 +64,16 @@ class CarAdvertRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(i
   /*
      Operations
   */
-  def insert(carAdvert: CarAdvert): Future[Unit] = db.run(carAdverts += carAdvert).map(_ => "Success")
+  def insert(carAdvert: CarAdvert): Future[CarAdvert] = db.run(carAdverts += carAdvert).map(_ => carAdvert)
 
   def findAll(sortBy: Option[String]): Future[Seq[CarAdvert]] = {
-
     if(sortBy.nonEmpty) {
-
       val keyAndDir = sortBy.map(_.split(':')).toList
       val dir = if (keyAndDir(0)(1) == "asc") Ordering.Asc else Ordering.Desc
       val sortsBy = Seq[(String, Direction)]((keyAndDir(0)(0), dir) , ("id", Ordering.Asc))
-
       val query = carAdverts.dynamicSortBy(sortsBy).result
       db.run(query)
     } else {
-
       val query = carAdverts.result
       db.run(query)
     }
@@ -87,11 +83,11 @@ class CarAdvertRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(i
     db.run(carAdverts.filter(_.id === id).result.headOption)
   }
 
-  def update(id: Int, carAdvert: CarAdvert): Future[Boolean] = {
+  def update(id: Int, carAdvert: CarAdvert): Future[CarAdvert] = {
     val newCarAdvert: CarAdvert = carAdvert.copy(Some(id))
     db.run(carAdverts.filter(_.id === id).update(newCarAdvert)).map { affectedRows =>
       affectedRows > 0
-    }
+    }.map(_ => carAdvert)
   }
 
   def delete(id: Int): Future[Boolean] = {
