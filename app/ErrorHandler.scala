@@ -9,6 +9,9 @@ import play.api.routing.Router
 
 import scala.concurrent._
 
+/*
+  We override the default Play's ErrorHandler in order to *always* serve JSON content responses to the client
+ */
 class ErrorHandler @Inject() (
                                env: Environment,
                                config: Configuration,

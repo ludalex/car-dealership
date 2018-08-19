@@ -26,6 +26,9 @@ class CarAdvertRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(i
       enum => enum.toString, str => FuelType.withName(str)
     )
 
+  /*
+     CarAdvert table definition
+  */
   private class CarAdvertTable(tag: Tag) extends Table[CarAdvert](tag, "car_adverts") with DynamicSortBySupport.ColumnSelector {
 
     def id = column[Option[Int]]("id", O.PrimaryKey, O.AutoInc)
@@ -44,6 +47,7 @@ class CarAdvertRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(i
 
     def * = (id, title, fuel, price, isNew, mileage, firstRegistration) <> ((CarAdvert.apply _).tupled, CarAdvert.unapply)
 
+    // Mapping used by the "sort by" logic
     val select = Map(
       "id" -> (this.id),
       "title" -> (this.title),
@@ -57,7 +61,9 @@ class CarAdvertRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(i
 
   private val carAdverts = TableQuery[CarAdvertTable]
 
-
+  /*
+     Operations
+  */
   def insert(carAdvert: CarAdvert): Future[Unit] = db.run(carAdverts += carAdvert).map(_ => "Success")
 
   def findAll(sortBy: Option[String]): Future[Seq[CarAdvert]] = {

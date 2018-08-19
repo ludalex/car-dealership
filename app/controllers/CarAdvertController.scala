@@ -13,12 +13,14 @@ import scala.concurrent.Future
 @Api(value = "adverts")
 class CarAdvertController @Inject() (carAdverts: CarAdvertRepository) extends Controller {
 
+  @ApiOperation(value = "Retrieve all Car Adverts", response = classOf[models.CarAdvert], responseContainer = "List")
   def index(sortBy: Option[String]) = Action.async {
     carAdverts.findAll(sortBy).map { data =>
       Ok(Json.toJson(data)).as(JSON)
     }
   }
 
+  @ApiOperation(value = "Retrieve a single Car Adverts by ID", response = classOf[models.CarAdvert])
   @ApiResponses(Array(
     new ApiResponse(code = 404, message = "Car Advert not found.")))
   def read(@ApiParam(value = "ID of the Car Advert to retrieve") id: Int) = Action.async {
@@ -28,6 +30,7 @@ class CarAdvertController @Inject() (carAdverts: CarAdvertRepository) extends Co
     }
   }
 
+  @ApiOperation(value = "Create new Car Advert", response = classOf[Void], responseReference = "void")
   @ApiImplicitParams(Array(
     new ApiImplicitParam(value = "CarAdvert object that needs to be added to the store", required = true, dataType = "models.CarAdvert", paramType = "body")))
   def create = Action.async(parse.json) { request =>
@@ -42,6 +45,7 @@ class CarAdvertController @Inject() (carAdverts: CarAdvertRepository) extends Co
     }
   }
 
+  @ApiOperation(value = "Update existing Car Advert", response = classOf[Void], responseReference = "void")
   def update(@ApiParam(value = "ID of the Car Advert to update") id: Int) = Action.async(parse.json) { request =>
     request.body.validate[CarAdvert].map { carAdvert =>
       carAdverts.update(id, carAdvert).map {
@@ -55,6 +59,7 @@ class CarAdvertController @Inject() (carAdverts: CarAdvertRepository) extends Co
     }
   }
 
+  @ApiOperation(value = "Delete a Car Advert", response = classOf[Void], responseReference = "void")
   def delete(@ApiParam(value = "ID of the Car Advert to delete") id: Int) = Action.async { request =>
     carAdverts.delete(id).map {
       case true => Ok(Json.obj("status" -> "success")).as(JSON)

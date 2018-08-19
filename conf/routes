@@ -10,7 +10,7 @@ PUT     /adverts/:id         controllers.CarAdvertController.update(id: Int)
 DELETE  /adverts/:id         controllers.CarAdvertController.delete(id: Int)
 
 # Swagger (json & UI)
-GET     /swagger.json        controllers.ApiHelpController.getResources
+GET     /swagger.json        controllers.Swagger.json
 GET     /docs/               controllers.Assets.at(path="/public/swagger", file = "index.html")
 GET     /docs/*file          controllers.Assets.at(path="/public/swagger", file)
 

@@ -2,7 +2,7 @@ package models
 
 import java.sql.Date
 
-import io.swagger.annotations.ApiModel
+import io.swagger.annotations.{ApiModel, ApiModelProperty}
 import models.FuelType.FuelType
 import play.api.data.validation.ValidationError
 import play.api.libs.json._
@@ -10,9 +10,18 @@ import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
 import utils.EnumerationHelpers
 
-@ApiModel("CarAdvert")
-case class CarAdvert(id: Option[Int], title: String, fuel: FuelType, price: Int, isNew: Boolean, mileage: Option[Int], firstRegistration: Option[Date])
+import scala.annotation.meta.field
 
+@ApiModel("CarAdvert")
+case class CarAdvert(
+                      @(ApiModelProperty @field)(value = "id", dataType = "int") id: Option[Int],
+                      @(ApiModelProperty @field) title: String,
+                      @(ApiModelProperty @field)(dataType = "string", allowableValues = "Diesel, Gasoline") fuel: FuelType,
+                      @(ApiModelProperty @field) price: Int,
+                      @(ApiModelProperty @field) isNew: Boolean,
+                      @(ApiModelProperty @field)(dataType = "int") mileage: Option[Int],
+                      @(ApiModelProperty @field) firstRegistration: Option[Date]
+                    )
 
 object FuelType extends Enumeration {
 

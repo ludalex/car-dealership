@@ -22,13 +22,13 @@ Usage
 
 You need to download and install sbt for this application to run.
 
-Once you have sbt installed, the following at the command prompt will start up Play in development mode:
+Once you have sbt installed, the following at the command prompt will start up the application:
 
 ```bash
 sbt run
 ```
 
-Play will start up on the HTTP port at <http://localhost:9000/>.   
+Application will start up on the HTTP port at <http://localhost:9000/>.   
 
 ### Sample Usage
 

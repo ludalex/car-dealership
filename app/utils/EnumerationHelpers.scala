@@ -4,7 +4,9 @@ import play.api.libs.json._
 
 import scala.language.implicitConversions
 
-
+/*
+  This utility class is needed to serialize/deserialze Enumerations properly, and provide proper error messages on validation
+*/
 object EnumerationHelpers {
   def enumReads[E <: Enumeration](enum: E): Reads[E # Value] = new Reads[E # Value] {
     def reads(json: JsValue): JsResult[E # Value] = json match {
